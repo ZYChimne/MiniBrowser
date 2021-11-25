@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Browser</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="core_fragment_label">First Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+</resources>
