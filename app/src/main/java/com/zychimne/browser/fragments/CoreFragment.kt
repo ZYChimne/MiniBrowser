@@ -5,35 +5,38 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.zychimne.browser.databinding.FragmentCoreBinding
+import com.zychimne.browser.viewmodels.CoreViewModel
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoSession
+import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.GeckoView
 
 
 class CoreFragment : Fragment() {
 
     private var _binding: FragmentCoreBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val viewmodel:CoreViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentCoreBinding.inflate(inflater, container, false)
         val view: GeckoView = binding.geckoview
         val session = GeckoSession()
-        val runtime = context?.let { GeckoRuntime.create(it) }
+        session.settings.userAgentMode=GeckoSessionSettings.USER_AGENT_MODE_DESKTOP
+        val runtime = context?.let { GeckoRuntime.getDefault(it) }
 
         if (runtime != null) {
             session.open(runtime)
         }
         view.setSession(session)
-        session.loadUri("www.baidu.com") // Or any other URL...
+        viewmodel.address.value?.let { session.loadUri(it) } // Or any other URL...
         return binding.root
 
     }
