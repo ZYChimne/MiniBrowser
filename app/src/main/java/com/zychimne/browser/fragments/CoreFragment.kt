@@ -28,15 +28,13 @@ class CoreFragment : Fragment() {
     ): View? {
         _binding = FragmentCoreBinding.inflate(inflater, container, false)
         val view: GeckoView = binding.geckoview
-        val session = GeckoSession()
-        session.settings.userAgentMode=GeckoSessionSettings.USER_AGENT_MODE_DESKTOP
-        val runtime = context?.let { GeckoRuntime.getDefault(it) }
-
-        if (runtime != null) {
-            session.open(runtime)
+        val session = context?.let { viewmodel.openSession(it) }
+        viewmodel.address.value?.let {
+            if (session != null) {
+                view.setSession(session)
+                session.loadUri(it) // Or any other URL...
+            }
         }
-        view.setSession(session)
-        viewmodel.address.value?.let { session.loadUri(it) } // Or any other URL...
         return binding.root
 
     }

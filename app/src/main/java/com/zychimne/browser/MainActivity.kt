@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        coreViewModel.setAddress("www.apple.com.cn/iphone")
+        coreViewModel.setAddress("http://10.151.106.26:8000/")
         coreViewModel.address.observe(this, Observer { address->
             binding.searchbar.setText(address)
         })
