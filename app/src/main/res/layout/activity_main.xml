@@ -48,6 +48,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="end"
+                    android:onClick="onRefreshBtnClick"
                     style="?android:attr/borderlessButtonStyle"
                     app:icon="@drawable/ic_baseline_refresh_24" />
             </androidx.appcompat.widget.Toolbar>

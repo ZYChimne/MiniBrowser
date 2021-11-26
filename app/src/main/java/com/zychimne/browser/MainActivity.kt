@@ -1,6 +1,7 @@
 package com.zychimne.browser
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -18,9 +19,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        coreViewModel.setAddress("http://10.151.106.26:8000/")
+        coreViewModel.setAddress("http://www.apple.com.cn/")
         coreViewModel.address.observe(this, Observer { address->
             binding.searchbar.setText(address)
         })
+    }
+    fun onRefreshBtnClick(view: View){
+        coreViewModel.refresh()
     }
 }

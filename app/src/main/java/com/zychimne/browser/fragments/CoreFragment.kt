@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import com.zychimne.browser.databinding.FragmentCoreBinding
 import com.zychimne.browser.viewmodels.CoreViewModel
 import org.mozilla.geckoview.GeckoRuntime
@@ -28,13 +30,10 @@ class CoreFragment : Fragment() {
     ): View? {
         _binding = FragmentCoreBinding.inflate(inflater, container, false)
         val view: GeckoView = binding.geckoview
-        val session = context?.let { viewmodel.openSession(it) }
-        viewmodel.address.value?.let {
-            if (session != null) {
-                view.setSession(session)
-                session.loadUri(it) // Or any other URL...
-            }
-        }
+        context?.let { viewmodel.openSession(it) }
+        viewmodel.session.observe(viewLifecycleOwner, Observer { session->
+            view.setSession(session)
+        })
         return binding.root
 
     }
